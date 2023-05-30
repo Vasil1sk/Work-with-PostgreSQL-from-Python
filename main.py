@@ -46,7 +46,7 @@ def add_phone_number(cursor, phone_number, client_id):
 def update_names(cursor, name, last_name, id):
     cur.execute("""
             UPDATE ClientsInfo SET name=%s, last_name=%s WHERE id=%s
-            RETURNING id, name, email;
+            RETURNING id, name, last_name;
             """, (name, last_name, id))
     return cur.fetchone()
 
@@ -55,6 +55,7 @@ def update_email(cursor, email, id):
             UPDATE ClientsInfo SET email=%s WHERE id=%s
             RETURNING id, email;
             """, (email, id))
+    return cur.fetchone()
 
 def update_phone_number(cursor, phone_number, id):
     cur.execute("""
@@ -132,7 +133,7 @@ if __name__ == "__main__":
                 name = str(input("Введите имя: "))
                 last_name = str(input("Введите фамилию: "))
                 client_id = int(input("Введите id клиента: "))
-                print(update_names(cur, name, last_name, id))
+                print(update_names(cur, name, last_name, client_id))
 
             elif command == "updatemail".lower():
                 email = str(input("Введите имейл: "))
